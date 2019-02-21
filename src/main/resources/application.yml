@@ -7,12 +7,19 @@ spring:
       context-path: /admin
       discovery:
         enabled: true
-      
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/tom333/config-repo.git
+        prefix: config
+          
 
 server:
   port: 8080
 
 eureka:
+  
   instance:
     hostname: localhost
     leaseRenewalIntervalInSeconds: 10
@@ -21,9 +28,9 @@ eureka:
     metadata-map:
       startup: ${random.int}    #needed to trigger info and endpoint update after restart
   client:
-#    fetchRegistry: false
     registryFetchIntervalSeconds: 5
     registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
       
